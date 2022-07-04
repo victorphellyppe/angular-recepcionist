@@ -14,7 +14,7 @@
     border: 1px solid rgb(10,80,107);
     border-radius: 20px;
     box-shadow: rgb(10,80,107) 3px 3px 10px ;
-    margin-top: 200px;
+    
 }
 
   ul {
@@ -83,4 +83,16 @@
 }
 .submenu li:hover{
     background-color: rgb(19, 157, 188);
+}
+
+@media (max-width: 600px){
+    .main-container{
+        min-height: 70vh;
+    }
+    .service-queue{
+        width: 350px;
+    }
+    .submenu{
+        margin-left: 60px;
+    }
 }
