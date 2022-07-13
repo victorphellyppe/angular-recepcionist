@@ -15,7 +15,7 @@
     <span>Resultado da Pesquisa</span>
     <ul *ngFor="let company of listCompanies | paginate: { itemsPerPage: counter, currentPage: pag }  ">
 
-      <li routerLink="/receptionist-panel" (click)="setLogoTemp(48)">{{company.name}}</li>
+      <li routerLink="/receptionist-panel" (click)="setLogoTemp(48, company.id)">{{company.name}}</li>
     </ul>
   </div>
   <div class="pagination-bottom">
