@@ -64,6 +64,7 @@ export class DoctorAboutDoctorDayComponent implements OnInit {
     alert(`Agendado: ${this.selectedName} para ${this.selectedTime} como ${type}`);
     this.selectedTime = null;
     this.selectedName = null;
+    this.names = []
   }
 
   cancelSchedule(): void {
