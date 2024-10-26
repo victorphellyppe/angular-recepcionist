@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceAuthService } from '../services/service-auth.service';
-import { company } from './company';
 
 @Component({
   selector: 'app-doctor-company-list',
@@ -9,18 +8,24 @@ import { company } from './company';
 })
 export class DoctorCompanyListComponent implements OnInit {
 
-  filterCompany: string;
+  filterCompany: string = '';
 
-  listCompanies:company[];
+  listCompanies:any[] = [];
 
   pag : number = 1;
   counter : number = 10;
 
   company: any;
-
+  medicalSpecialties = [
+    { id: null, name: 'Cardiologia' },
+    { id: null, name: 'Dermatologia' },
+    { id: null, name: 'Neurologia' },
+    { id: null, name: 'Pediatria' },
+    { id: null, name: 'Ortopedia' }
+  ];
   constructor(
     private companyListService: ServiceAuthService
-  ) { 
+  ) {
     this.listCompanies = [];
   }
 
@@ -34,17 +39,16 @@ export class DoctorCompanyListComponent implements OnInit {
   }
 
   doctorCompanies(): void {
-    console.log(sessionStorage.getItem("token"));
-    this.companyListService.listCompanies(sessionStorage.getItem("token"))
-    .subscribe(
-      data => {
-        sessionStorage
-        this.listCompanies = data;
+    const token = sessionStorage.getItem("token");
+    this.companyListService.listCompanies(token)
+    .subscribe({
+      next: (data) => {
+        this.listCompanies = ["teste", ...data];
       },
-      error => {
+      error: (error) => {
         console.log(error);
       }
-    );
+  });
   }
 
 }

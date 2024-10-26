@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceAuthService } from '../services/patients.service';
-import { Patient } from './Patient';
 import { Router } from '@angular/router';
+import { PatientService } from '../services/patients.service';
+import { Patient } from './Patient';
 
 @Component({
   selector: 'app-doctor-panel',
@@ -10,16 +10,22 @@ import { Router } from '@angular/router';
 })
 export class DoctorPanelComponent implements OnInit {
 
-  filterPatient: string;
+  filterPatient: string = '';
 
   listPatients: Patient[];
 
   patient: any;
-  
+
   pag : number = 1;
   counter : number = 10;
-
-  constructor(private patientService: ServiceAuthService, private route: Router) { 
+  especialidades = [
+    { id: null, name: 'Cardiologia' },
+    { id: null, name: 'Dermatologia' },
+    { id: null, name: 'Neurologia' },
+    { id: null, name: 'Pediatria' },
+    { id: null, name: 'Ortopedia' }
+  ];
+  constructor(private patientService: PatientService, private route: Router) {
     this.listPatients = [];
   }
 
@@ -35,21 +41,35 @@ export class DoctorPanelComponent implements OnInit {
   }
 
   listPatient(): void {
-    this.patientService.listPatients(sessionStorage.getItem("token"),sessionStorage.getItem("companyId"))
-    .subscribe(
-      data => {
-        this.listPatients = data;        
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    const token = sessionStorage.getItem("token");
+    const companyId = sessionStorage.getItem("companyId");
+
+    const companyIdNumber = companyId ? Number(companyId) : null;
+
+    if (token && companyIdNumber !== null) {
+      this.patientService.listPatients(token, companyIdNumber)
+        .subscribe({
+          next: (data) => {
+            console.log(data);
+            this.listPatients = data;
+          },
+          error: (error) => {
+            console.log(error);
+          },
+          complete: () => {
+            console.log('Request completed.');
+          }
+        });
+    } else {
+      console.log('Token or Company ID is missing.');
+    }
   }
 
-  selectPatient(patientId: any): void {
-    sessionStorage.setItem("patientId", patientId);
-    this.route.navigateByUrl('/doctor-patient-schedule');
 
+  selectDoctor(doctorId: any): void {
+    console.log(doctorId, 'Doctor-panel');
+    this.route.navigate(['/doctor-about-doctor', doctorId]);
+    // this.route.navigateByUrl('/doctor-about-doctor');
   }
 
   searchPatient(search: any): void {
@@ -57,7 +77,7 @@ export class DoctorPanelComponent implements OnInit {
     sessionStorage.getItem("companyId"), search)
     .subscribe(
       data => {
-        this.listPatients = data;        
+        this.listPatients = data;
       },
       error => {
         console.log(error);

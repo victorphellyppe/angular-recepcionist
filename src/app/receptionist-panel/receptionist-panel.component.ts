@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceAuthService } from '../services/patients.service';
-import { Patient } from './patient';
 import { Router } from '@angular/router';
+import { PatientService } from '../services/patients.service';
+import { Patient } from './Patient';
 
 
 @Component({
@@ -14,16 +14,16 @@ import { Router } from '@angular/router';
 
 export class ReceptionistPanelComponent implements OnInit {
 
-  filterPatient: string;
+  filterPatient: string = '';
 
   listPatients: Patient[];
 
   patient: any;
-  
+
   pag : number = 1;
   counter : number = 10;
- 
-  constructor( private patientService: ServiceAuthService, private route: Router) { 
+
+  constructor( private patientService: PatientService, private route: Router) {
       this.listPatients = [];
 
   }
@@ -40,16 +40,29 @@ export class ReceptionistPanelComponent implements OnInit {
   }
 
   listPatient(): void {
-    this.patientService.listPatients(sessionStorage.getItem("token"),sessionStorage.getItem("companyId"))
-    .subscribe(
-      data => {
-        this.listPatients = data;        
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    const token = sessionStorage.getItem("token");
+    const companyId = sessionStorage.getItem("companyId");
+
+    const companyIdNumber = companyId ? Number(companyId) : null;
+
+    if (token && companyIdNumber !== null) {
+      this.patientService.listPatients(token, companyIdNumber)
+        .subscribe({
+          next: (data: any) => {
+            this.listPatients = data;
+          },
+          error: (error: any) => {
+            console.log('Erro ao listar pacientes:', error);
+          },
+          complete: () => {
+            console.log('Listagem de pacientes concluída.');
+          }
+        });
+    } else {
+      console.log('Token ou Company ID está ausente.');
+    }
   }
+
 
   selectPatient(patientId: any): void {
     sessionStorage.setItem("patientId", patientId);
@@ -62,7 +75,7 @@ export class ReceptionistPanelComponent implements OnInit {
     sessionStorage.getItem("companyId"), search)
     .subscribe(
       data => {
-        this.listPatients = data;        
+        this.listPatients = data;
       },
       error => {
         console.log(error);
@@ -70,6 +83,6 @@ export class ReceptionistPanelComponent implements OnInit {
     );
   }
 
- 
+
 
 }

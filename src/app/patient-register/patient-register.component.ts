@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ServiceAuthService } from '../services/patients.service';
-import { Patient } from '../receptionist-panel/patient';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Patient } from '../receptionist-panel/Patient';
+import { PatientService } from '../services/patients.service';
 
 @Component({
   selector: 'app-patient-register',
@@ -15,8 +15,8 @@ export class PatientRegisterComponent implements OnInit {
   patientFormGroup: FormGroup;
   patient = {} as Patient;
 
-  constructor(private formBuilder: FormBuilder, 
-    private patientService: ServiceAuthService,
+  constructor(private formBuilder: FormBuilder,
+    private patientService: PatientService,
     private route: Router) {
 
     this.patientFormGroup = this.formBuilder.group({
@@ -59,11 +59,11 @@ export class PatientRegisterComponent implements OnInit {
     alert("Formulário válido!");
   }
 
-  createPatient(): void {  
+  createPatient(): void {
     this.setPatient();
     this.patientService.createPatients(sessionStorage.getItem("token"),
       sessionStorage.getItem("companyId"), this.patient)
-      
+
       .subscribe(
         data => {
           console.log(data);
@@ -74,7 +74,7 @@ export class PatientRegisterComponent implements OnInit {
         }
       );
   }
-  
+
   setPatient() {
     this.patient.name = this.patientFormGroup.value.name;
     this.patient.surname = this.patientFormGroup.value.surname;
@@ -92,7 +92,7 @@ export class PatientRegisterComponent implements OnInit {
     this.patient.health_insurance_name = this.patientFormGroup.value.health_insurance_name;
     this.patient.health_insurance_number = this.patientFormGroup.value.health_insurance_number;
     this.patient.marital_status = this.patientFormGroup.value.marital_status;
-    this.patient.email = this.patientFormGroup.value.email; 
+    this.patient.email = this.patientFormGroup.value.email;
     this.patient.mother_name = this.patientFormGroup.value.mother_name;
     this.patient.gender = this.patientFormGroup.value.gender;
     this.patient.password = "123456";

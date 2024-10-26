@@ -1,17 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Doctor } from '../schedule-register/doctor';  
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { Doctor } from '../schedule-register/doctor';
+import { Schedullings } from '../schedule-register/schedulings';
 
 
-const baseUrl = 'https://api.segnuv.com.br/api';
+// const baseUrl = "http://sentinela.sosystemsolucoes.com.br/api";
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ServiceAuthService { 
+export class DoctorService {
+companyId: any;
 
   constructor(private http: HttpClient,
     private router: Router
@@ -20,27 +23,47 @@ export class ServiceAuthService {
   listDoctors(token: any, companyId: any): Observable<any> {
     console.log(token);
     console.log(companyId);
+    this.companyId = companyId
 
-    var reqHeader = new HttpHeaders({ 
+    var reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization':"Bearer " + token
    });
-    return this.http.get<Doctor>(`${baseUrl}/companies/${companyId}/doctors`, {headers : reqHeader});
+    return this.http.get<Doctor>(`${environment.api}/companies/${companyId}/doctors`, {headers : reqHeader});
+  }
+
+  toSchedule() {
+    const token = sessionStorage.getItem('token');
+
+    if (!token) {
+      console.error('Token não encontrado.');
+      return;
+    }
+
+    var reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    console.log(this.companyId, 'Company');
+
+    return this.http.get<Schedullings>(`${environment.api}/companies/${this.companyId}/schedulings`, {
+      headers: reqHeader,
+    });
   }
 
   getDoctors(token: any, companyId: any, doctorId: any): Observable<any> {
 
-    var reqHeader = new HttpHeaders({ 
+    var reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization':"Bearer " + token
    });
-    return this.http.get<Doctor>(`${baseUrl}/companies/${companyId}/doctors/${doctorId}`, {headers : reqHeader});
+    return this.http.get<Doctor>(`${environment.api}/companies/${companyId}/doctors/${doctorId}`, {headers : reqHeader});
   }
 
-  
+
  // deletePatient(token: any, companyId: any, patientId: any): Observable<any> {
 
-  //  var reqHeader = new HttpHeaders({ 
+  //  var reqHeader = new HttpHeaders({
   //    'Content-Type': 'application/json',
   //    'Authorization':"Bearer " + token
   // });
@@ -48,16 +71,16 @@ export class ServiceAuthService {
   //}
 
   searchDoctor(token: any, companyId: any, search: any): Observable<any> {
-    var reqHeader = new HttpHeaders({ 
+    var reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization':"Bearer " + token
    });
-    return this.http.get<Doctor>(`${baseUrl}/companies/${companyId}/doctors?search=${search}`, {headers : reqHeader});
-  
+    return this.http.get<Doctor>(`${environment.api}/companies/${companyId}/doctors?search=${search}`, {headers : reqHeader});
+
   }
 
   //createPatients(token: any, companyId: any, objectPatient: any): Observable<any> {
-   // var reqHeader = new HttpHeaders({ 
+   // var reqHeader = new HttpHeaders({
    //   'Content-Type': 'application/json',
    //   'Authorization':"Bearer " + token
    //});
@@ -66,12 +89,18 @@ export class ServiceAuthService {
   //}
 
  // updatePatient(token: any, companyId: any, patientId: any, objectPatient: any): Observable<any> {
-  //  var reqHeader = new HttpHeaders({ 
+  //  var reqHeader = new HttpHeaders({
   //    'Content-Type': 'application/json',
   //    'Authorization':"Bearer " + token
   // });
  //   return this.http.patch<Doctor>(`${baseUrl}/companies/${companyId}/patients/${doctorId}`, objectPatient, {headers : reqHeader});
  // }
 
-
+ doctorCompanies(token: any): Observable<any> {
+  var reqHeader = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization':"Bearer " + token
+ });
+  return this.http.get(`${environment.api}/companies/me/doctor?search={{search?}}`, {headers : reqHeader});
+}
 }

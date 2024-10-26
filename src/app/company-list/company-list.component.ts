@@ -9,7 +9,7 @@ import { company } from './company';
 })
 export class CompanyListComponent implements OnInit {
 
-  filterCompany: string;
+  filterCompany: string = '';
 
   listCompanies:company[];
 
@@ -20,7 +20,7 @@ export class CompanyListComponent implements OnInit {
 
   constructor(
     private companyListService: ServiceAuthService
-  ) { 
+  ) {
     this.listCompanies = [];
   }
 

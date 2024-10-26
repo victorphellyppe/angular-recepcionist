@@ -32,7 +32,7 @@ export class HeaderMenuComponent implements OnInit {
       this.cadastrarAgenda = false;
       this.alertaChat = false;
       this.pesquisarPaciente = false;
-      sessionStorage.setItem('patientId', null);
+      sessionStorage.setItem('patientId', '');
       this.router.navigateByUrl("/patient-register");
     } else if (button == 'cadastrarAgenda') {
       this.cadastrarAgenda = true;

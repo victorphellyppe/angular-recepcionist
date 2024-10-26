@@ -1,34 +1,51 @@
 <app-header-menu></app-header-menu>
 
-<div class="mainbody">
-    
-    <div class="center">
-        <div class="time"><label for="">8:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">8:30</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">9:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">9:30</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">10:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">10:30</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">11:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">11:30</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">13:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">13:30</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">14:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">14:30</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">15:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">15:30</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">16:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">16:30</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">17:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">17:30</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">18:00</label><input type="text"><button>Agendar</button></div>
-        <div class="time"><label for="">18:30</label><input type="text"><button>Agendar</button></div>
-    </div>
-
+<div class="center">
+  <div *ngFor="let hora of hours; let i = index" class="time">
+    <label>{{ hora }}</label>
+    <input type="text" placeholder="Nome do paciente" />
+    <button (click)="schedule(hora)">schedule</button>
+  </div>
 </div>
 
+<!-- Modal simples para escolher o tipo de consulta -->
+<div *ngIf="selectedTime" class="modal">
+  <div class="modal-content">
+    <h4>Escolha o tipo de consulta</h4>
+    <p>
+      Você deseja agendar a consulta para o horário {{ selectedTime }} como:
+    </p>
+    <div class="container">
+      <button (click)="confirmQuery('Presencial')">Presencial</button>
+      <button (click)="confirmQuery('Telemedicina')">Telemedicina</button>
+      <button (click)="cancelSchedule()">Cancelar</button>
+    </div>
+  </div>
+</div>
 
+<!-- <div class="center">
+        <div class="time"><label for="">8:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">8:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">9:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">9:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">10:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">10:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">11:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">11:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">13:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">13:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">14:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">14:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">15:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">15:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">16:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">16:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">17:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">17:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">18:00</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+        <div class="time"><label for="">18:30</label><input type="text"><button (click)="agendar()">Agendar</button></div>
+    </div>
 
-
+</div>-->
 
 <app-footer></app-footer>

@@ -4,11 +4,11 @@
         <ul>
             <div class="logo-empresa"><img src="{{logo}}"></div>
 
-            
+
             <div class="container-button" *ngIf="pesquisarPaciente; then thenBlock4 else elseBlock4"></div>
             <ng-template #thenBlock4>
                 <li id="on"><a type="button" routerLink="/doctor-panel"
-                        (click)="buttonOn('pesquisarPaciente')">Pesquisar Paciente</a></li>
+                        (click)="buttonOn('pesquisarPaciente')">Pesquisar Doutor</a></li>
             </ng-template>
             <ng-template #elseBlock4>
                 <li><a type="button" routerLink="/doctor-panel" (click)="buttonOn('pesquisarPaciente')">Pesquisar

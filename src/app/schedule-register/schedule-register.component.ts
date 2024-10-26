@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceAuthService } from '../services/doctors.service';
 import { Router } from '@angular/router';
+import { DoctorService } from '../services/doctors.service';
 import { Doctor } from './doctor';
 
 @Component({
@@ -10,20 +10,20 @@ import { Doctor } from './doctor';
 })
 export class ScheduleRegisterComponent implements OnInit {
 
-  filterDoctor: string;
+  filterDoctor: string = '';
 
   listDoctors: Doctor[];
 
   doctor: any;
-  
+
   pag : number = 1;
   counter : number = 10;
 
-  constructor( private doctorService: ServiceAuthService, private  route: Router ) { 
+  constructor( private doctorService: DoctorService, private  route: Router ) {
     this.listDoctors = [];
   }
 
-  
+
   ngOnInit(): void {
     this.listDoctor();
     console.log(this.listDoctor())
@@ -36,16 +36,31 @@ export class ScheduleRegisterComponent implements OnInit {
   }
 
   listDoctor(): void {
-    this.doctorService.listDoctors(sessionStorage.getItem("token"),sessionStorage.getItem("companyId"))
-    .subscribe(
-      data => {
-        this.listDoctors = data;        
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    const token = sessionStorage.getItem("token");
+    const companyId = sessionStorage.getItem("companyId");
+
+    // Verifica se o token e o companyId estão disponíveis
+    if (!token || !companyId) {
+      console.error("Token ou Company ID não encontrados no sessionStorage.");
+      return; // Retorna se não houver informações necessárias
+    }
+
+    this.doctorService.listDoctors(token, companyId)
+      .subscribe({
+        next: (data: any[]) => {
+          if (data && data.length > 0) {
+            this.listDoctors = data; // Atribui os dados retornados à variável
+          } else {
+            console.warn("Nenhum médico encontrado.");
+            this.listDoctors = []; // Inicializa como um array vazio se não houver dados
+          }
+        },
+        error: (error: any) => {
+          console.error("Erro ao listar médicos:", error); // Melhorar a mensagem de erro
+        }
+      });
   }
+
 
   selectDoctor(doctorId: any): void {
     sessionStorage.setItem("doctorId", doctorId);
@@ -58,7 +73,7 @@ export class ScheduleRegisterComponent implements OnInit {
     sessionStorage.getItem("companyId"), search)
     .subscribe(
       data => {
-        this.listDoctors = data;        
+        this.listDoctors = data;
       },
       error => {
         console.log(error);

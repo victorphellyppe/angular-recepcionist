@@ -4,7 +4,7 @@
 <div class="main">
     <div class="center">
       <div class="search-field">
-  
+
         <input [(ngModel)]="filterCompany" id="search" type="search" placeholder="Pesquisar Empresa">
         <button (click)="doctorCompanies()"><i class="fa fa-search" aria-hidden="true"></i></button>
       </div>
@@ -13,17 +13,30 @@
     <pagination-controls class="my-pagination" (pageChange)="pag = $event" previousLabel="Anterior" nextLabel="Próximo" [responsive]="true"></pagination-controls>
     </div>
     <div class="center">
-  
+
       <span>Resultado da Pesquisa</span>
-      <ul *ngFor="let company of listCompanies | filter: filterCompany | paginate: { itemsPerPage: counter, currentPage: pag }  ">
-  
-        <li routerLink="/doctor-panel" (click)="setLogoTemp(48, company.id)">{{company.name}}</li>
+      <ul *ngFor="let company of listCompanies | filter: (filterCompany ?? '') | paginate: { itemsPerPage: counter, currentPage: pag }">
+        <li routerLink="/doctor-panel" (click)="setLogoTemp(48, company.id)">
+          {{ company.name }}
+          <span *ngIf="medicalSpecialties.length > 0 && company.name">
+            {{ medicalSpecialties[0].name }}
+          </span>
+        </li>
       </ul>
+
+
+
+      <!-- <ul *ngFor="let company of listCompanies | filter: (filterCompany ?? '') | paginate: { itemsPerPage: counter, currentPage: pag }">
+
+        <li routerLink="/doctor-panel" (click)="setLogoTemp(48, company.id)">
+          Cardionolista: {{ company.name }} </li><br>
+
+      </ul> -->
     </div>
     <div class="pagination-bottom">
       <pagination-controls class="my-pagination" (pageChange)="pag = $event" previousLabel="Anterior" nextLabel="Próximo" [responsive]="true"></pagination-controls>
     </div>
   </div>
-  
+
 
 <app-footer-doctor></app-footer-doctor>

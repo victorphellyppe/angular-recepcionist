@@ -13,7 +13,7 @@
   <div class="center">
 
     <span>Resultado da Pesquisa</span>
-    <ul *ngFor="let company of listCompanies | filter: filterCompany | paginate: { itemsPerPage: counter, currentPage: pag }  ">
+    <ul *ngFor="let company of listCompanies | filter: (filterCompany ? filterCompany : '') | paginate: { itemsPerPage: counter, currentPage: pag }">
 
       <li routerLink="/receptionist-panel" (click)="setLogoTemp(48, company.id)">{{company.name}}</li>
     </ul>

@@ -32,7 +32,7 @@ export class AdminHeaderComponent implements OnInit {
       this.cadastrarAgenda = false;
       this.supervisao = false;
       this.gestaoDeFuncionarios = false;
-      sessionStorage.setItem('patientId', null);
+      sessionStorage.setItem('patientId', '');
       this.router.navigateByUrl("/admin-patient-management");
     } else if (button == 'cadastrarAgenda') {
       this.cadastrarAgenda = true;

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ServiceAuthService } from '../services/patients.service';
-import { Patient } from '../receptionist-panel/patient';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Patient } from '../receptionist-panel/Patient';
+import { PatientService } from '../services/patients.service';
 
 @Component({
   selector: 'app-patient-update',
@@ -35,9 +35,9 @@ export class PatientUpdateComponent implements OnInit {
   upGender:any;
   upEmail:any;
 
-  constructor(private formBuilder: FormBuilder, 
-    private patientService: ServiceAuthService,
-    private route: Router) { 
+  constructor(private formBuilder: FormBuilder,
+    private patientService: PatientService,
+    private route: Router) {
       this.patientUpdateFormGroup = this.formBuilder.group({
         name: ['', Validators.required],
         surname: ['', Validators.required],
@@ -63,7 +63,7 @@ export class PatientUpdateComponent implements OnInit {
         mother_name:[],
         complement:[],
         password:[]
-      });          
+      });
   }
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class PatientUpdateComponent implements OnInit {
 
   showPatient(): void {
     this.patientService.getPatients(
-    sessionStorage.getItem("token"), 
+    sessionStorage.getItem("token"),
     sessionStorage.getItem("companyId"),
     sessionStorage.getItem("patientId"))
     .subscribe(
@@ -86,11 +86,11 @@ export class PatientUpdateComponent implements OnInit {
   }
 
   updatePatient(): void {
-    const updatedPatient = {      
+    const updatedPatient = {
         name : this.upName,
-        surname : this.upSurname,  
+        surname : this.upSurname,
 
-        address : this.upAddress,       
+        address : this.upAddress,
         number : this.upNumber,
         complement : this.upComplement,
         UF : this.upUF,
@@ -107,22 +107,25 @@ export class PatientUpdateComponent implements OnInit {
         marital_status : this.upMarital_status,
         gender : this.upGender,
         email : this.upEmail,
-        
-          
+
+
     };
 
-    console.log(this.patient);
-    this.patientService.updatePatient(sessionStorage.getItem("token"),
-      sessionStorage.getItem("companyId"), sessionStorage.getItem("patientId"), updatedPatient)      
-      .subscribe(
-        data => {
-          console.log(data);
-          this.route.navigateByUrl('/patient-schedule');
-        },
-        error => {
-          console.log(error);
-        }
-      );
-  }
+    this.patientService.updatePatient(
+      sessionStorage.getItem("token"),
+      sessionStorage.getItem("companyId"),
+      sessionStorage.getItem("patientId"),
+      updatedPatient
+    ).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.route.navigateByUrl('/patient-schedule');
+      },
+      error: (error) => {
+        console.error("Erro ao atualizar paciente:", error);
+      }
+    });
 
+
+  }
 }

@@ -3,13 +3,13 @@
 <div class="row">
     <a><i (click)="backMonth()" class="fa fa-angle-left" aria-hidden="true"></i></a>
     <div class="mainbody">
-        <span>Nome do médico</span>
+        <span>Dr(a). Nome do médico</span>
         <span>{{monthName}} de {{year}}</span>
 
         <div class="container">
             <div *ngFor="let day of counter;">
-                <a routerLink="/doctor-about-doctor-day">
-                    <div *ngIf="checkToday(day, month, year); then thenBlock else elseBlock"></div>
+              <a [routerLink]="['/doctor-about-doctor-day', day, month, year]">
+                <div *ngIf="checkToday(day, month, year); then thenBlock else elseBlock"></div>
                     <ng-template #thenBlock>
                         <div class="card-container">
                             <div class="front-today">

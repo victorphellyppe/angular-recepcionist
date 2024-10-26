@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Doctor } from '../schedule-register/doctor';
-import { ServiceAuthService } from '../services/doctors.service';
 import { Router } from '@angular/router';
+import { DoctorService } from '../services/doctors.service';
 
 
 const weekday = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
@@ -23,12 +22,12 @@ export class AboutDoctorComponent implements OnInit {
   year: any;
 
   doctor:any;
-  constructor(private doctorService: ServiceAuthService, private  route: Router) { }
+  constructor(private doctorService: DoctorService, private  route: Router) { }
 
   ngOnInit(): void {
     this.calcDays();
     this.setCounterLength();
-  
+
   }
 
 
@@ -85,6 +84,6 @@ export class AboutDoctorComponent implements OnInit {
     this.setCounterLength();
   }
 
-  
+
 
 }

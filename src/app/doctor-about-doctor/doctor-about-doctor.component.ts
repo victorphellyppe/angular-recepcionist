@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 const weekday = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
 const month = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto","Setembro", "Outubro", "Novembro", "Dezembro"];
@@ -15,13 +16,14 @@ export class DoctorAboutDoctorComponent implements OnInit {
   month: any;
   monthName: any;
   year: any;
-
-  constructor() { }
+  doctorId!: number;
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.doctorId = Number(this.route.snapshot.paramMap.get('doctorId'));
     this.calcDays();
     this.setCounterLength();
-  
+
   }
 
   checkToday(actualDay:number, actualMonth:number, actualYear:number) : boolean {
