@@ -69,6 +69,7 @@ const routes: Routes = [
   { path: 'header-medico', component: HeaderMedicoComponent, canActivate:[AuthGuardService]},
   { path: 'doctor-panel', component: DoctorPanelComponent, canActivate:[AuthGuardService]},
   { path: 'footer-doctor', component: FooterDoctorComponent, canActivate:[AuthGuardService]},
+  { path: 'doctor-about-doctor', component: DoctorAboutDoctorComponent, canActivate:[AuthGuardService]},
   { path: 'doctor-about-doctor/:doctorId', component: DoctorAboutDoctorComponent, canActivate:[AuthGuardService]},
   { path: 'doctor-company-list', component: DoctorCompanyListComponent, canActivate:[AuthGuardService]},
   { path: 'doctor-about-doctor-day/:day/:month/:year', component: DoctorAboutDoctorDayComponent, canActivate:[AuthGuardService]},
