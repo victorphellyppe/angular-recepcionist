@@ -85,5 +85,11 @@ export class DoctorPanelComponent implements OnInit {
     );
   }
 
+  viewExams(patientId: number) {
+    alert(patientId)
+    // Lógica para exibir exames do paciente
+    console.log(`Exibindo exames para o paciente com ID: ${patientId}`);
+    // Você pode redirecionar para outra página, abrir um modal, etc.
+  }
 
 }

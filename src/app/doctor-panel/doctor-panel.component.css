@@ -5,7 +5,7 @@
 }
 
 .center{
-    
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -47,6 +47,8 @@
 .search-field button i{
     color: #fff;
 }
+
+
 
 .search-field button:hover{
     background-color: rgb(19,158,188);
@@ -97,6 +99,35 @@
     color: #fff;
 }
 
+.center img {
+  width: 30px;
+  height: 30px;
+}
+
+li {
+  display: flex; /* Utiliza flexbox para organizar os itens */
+  justify-content: space-between; /* Espalha os itens pelo espaço disponível */
+  align-items: center; /* Alinha verticalmente os itens ao centro */
+  gap: 10px; /* Adiciona espaço entre os elementos */
+}
+
+.specialty {
+  margin-left: auto; /* Coloca a especialidade à direita */
+}
+
+.exam-button {
+  background: none; /* Remove o fundo do botão */
+  border: none; /* Remove a borda */
+  padding: 0; /* Remove qualquer preenchimento */
+  cursor: pointer; /* Mantém o cursor como pointer */
+}
+
+.img {
+  max-width: 100%; /* Garante que a imagem não ultrapasse os limites do botão */
+  height: auto; /* Mantém a proporção da imagem */
+}
+
+
 .pagination-top{
     margin-top: 50px;
     margin-bottom: -50px;
@@ -122,7 +153,7 @@
     }
     .center{
         width: 350px;
-      
+
     }
     .search-field{
         flex-direction: column;

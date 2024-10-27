@@ -17,10 +17,14 @@
         <ul *ngFor="let patient of listPatients | filter: filterPatient | paginate: { itemsPerPage: counter, currentPage: pag }">
           <li (click)="selectDoctor(patient.id)">
             Dr(a). {{ patient.name }}
-            <span *ngIf="especialidades.length > 0">
+            <span *ngIf="especialidades.length > 0" class="specialty">
               {{ especialidades[0].name }}
             </span>
+            <span (click)="viewExams(patient.id); $event.stopPropagation();" class="exam-button">
+              <img class="img" src="assets/exames.png" alt="Exames" />
+            </span>
           </li>
+
         </ul>
     </div>
     <div class="pagination-bottom">
