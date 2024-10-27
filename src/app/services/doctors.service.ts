@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Doctor } from '../schedule-register/doctor';
 import { Schedullings } from '../schedule-register/schedulings';
@@ -32,18 +32,19 @@ companyId: any;
     return this.http.get<Doctor>(`${environment.api}/companies/${companyId}/doctors`, {headers : reqHeader});
   }
 
-  toSchedule() {
+  toSchedule(): Observable<Schedullings> {
     const token = sessionStorage.getItem('token');
 
     if (!token) {
       console.error('Token não encontrado.');
-      return;
+      return throwError(() => new Error('Token não encontrado.')); // Retorna um erro como um Observable
     }
 
-    var reqHeader = new HttpHeaders({
+    const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     });
+
     console.log(this.companyId, 'Company');
 
     return this.http.get<Schedullings>(`${environment.api}/companies/${this.companyId}/schedulings`, {

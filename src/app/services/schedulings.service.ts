@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { Schedullings } from '../schedule-register/schedulings';
 
 @Injectable({
@@ -11,20 +13,20 @@ export class SchedulingsService {
   // GET /companies/4/schedulings
   // const token = sessionStorage.getItem("token");
 
-  toSchedule(idCompany: number) {
+  toSchedule(idCompany: number): Observable<Schedullings> {
     const token = sessionStorage.getItem('token');
 
     if (!token) {
       console.error('Token não encontrado.');
-      return; // Tratar o caso em que o token está ausente
+      return throwError(() => new Error('Token não encontrado.')); // Retorna um erro como um Observable
     }
 
-    var reqHeader = new HttpHeaders({
+    const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`, // Uso de template string para evitar concatenação manual
+      Authorization: `Bearer ${token}`,
     });
 
-    return this.httpClient.get<Schedullings>(`api/companies/${idCompany}/schedulings`, {
+    return this.httpClient.get<Schedullings>(`${environment.api}/companies/${idCompany}/schedulings`, {
       headers: reqHeader,
     });
   }
@@ -37,19 +39,18 @@ export class SchedulingsService {
   // 	"happen_at": "2022-08-10 13:00:00"
   // }
   // token
-  postSchedulings(schedulings:Schedullings) {
+  postSchedulings(user_id: number, company_doctor_id: number, happen_at: any): Observable<any> {
     const token = sessionStorage.getItem('token');
-    const user_id = sessionStorage.getItem('user_id');
 
     if (!token) {
       console.error("Token não encontrado.");
-      return;
+      return throwError(() => new Error('Token não encontrado.'));
     }
-    var schedulingData = {
-      "user_id": schedulings.user_id,
-      "room_id": schedulings.room_id,
-      "company_doctor_id": schedulings.company_doctor_id,
-      "happen_at": schedulings.happen_at
+
+    const schedulingData = {
+      "user_id": user_id,
+      "company_doctor_id": company_doctor_id,
+      "happen_at": happen_at
     };
 
     return this.httpClient.post('http://sentinela.sosystemsolucoes.com.br/api/companies/4/schedulings',
@@ -60,16 +61,9 @@ export class SchedulingsService {
           'Authorization': `Bearer ${token}`
         })
       }
-    ).subscribe({
-      next: (response) => {
-        console.log('Agendamento realizado com sucesso:', response);
-      },
-      error: (error) => {
-        console.error('Erro ao realizar agendamento:', error);
-      }
-    });
-
+    );
   }
+
 
   // GET /companies/4/schedulings/1
 // token

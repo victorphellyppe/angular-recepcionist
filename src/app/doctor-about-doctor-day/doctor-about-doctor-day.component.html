@@ -21,8 +21,8 @@
           Você deseja agendar a consulta para o horário {{ selectedTime }} para o paciente {{ selectedName }} como:
         </p>
         <div class="container">
-          <button (click)="confirmQuery('Presencial')">Presencial</button>
-          <button (click)="confirmQuery('Telemedicina')">Telemedicina</button>
+          <button (click)="confirmQuery('Presencial', selectedTime)">Presencial</button>
+          <button (click)="confirmQuery('Telemedicina', selectedTime)">Telemedicina</button>
           <button (click)="cancelSchedule()">Cancelar</button>
         </div>
       </div>

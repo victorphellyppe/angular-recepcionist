@@ -72,7 +72,7 @@ const routes: Routes = [
   { path: 'doctor-about-doctor', component: DoctorAboutDoctorComponent, canActivate:[AuthGuardService]},
   { path: 'doctor-about-doctor/:doctorId', component: DoctorAboutDoctorComponent, canActivate:[AuthGuardService]},
   { path: 'doctor-company-list', component: DoctorCompanyListComponent, canActivate:[AuthGuardService]},
-  { path: 'doctor-about-doctor-day/:day/:month/:year', component: DoctorAboutDoctorDayComponent, canActivate:[AuthGuardService]},
+  { path: 'doctor-about-doctor-day/:doctorId/:day/:month/:year', component: DoctorAboutDoctorDayComponent, canActivate:[AuthGuardService]},
   { path: 'doctor-chat-alert', component: DoctorChatAlertComponent, canActivate:[AuthGuardService]},
   { path: 'doctor-consultations-in-progress', component: DoctorConsultationsInProgressComponent, canActivate:[AuthGuardService]},
   { path: 'doctor-patient-schedule', component: DoctorPatientScheduleComponent, canActivate:[AuthGuardService]},
