@@ -3,7 +3,7 @@
 <div class="main">
   <div class="center">
     <div class="search-field">
-      
+
       <input [(ngModel)]="filterDoctor" id="search" type="search" placeholder="Pesquisar Médico">
       <button (click)="searchDoctors(filterDoctor)"><i class="fa fa-search" aria-hidden="true"></i></button>
     </div>
@@ -17,7 +17,7 @@
   <div class="center">
     <span>Resultado da Pesquisa</span>
     <ul *ngFor="let doctor of listDoctors | filter: filterDoctor | paginate: { itemsPerPage: counter, currentPage: pag }  " >
-      <li (click)="selectDoctor(doctor.id)" >{{doctor.name}} {{doctor.occupations}}</li>        
+      <li (click)="selectDoctor(doctor.id)" > Dr(a). {{doctor.name}} {{doctor.occupations}}</li>
     </ul>
 
   </div>

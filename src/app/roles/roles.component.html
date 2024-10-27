@@ -1,7 +1,7 @@
+<!-- <span *ngIf="role.name != 'user' && role.name != 'patient'"> -->
 <div *ngFor="let role of roles">
-    
-        <span *ngIf="role.name != 'user' && role.name != 'patient'">
+        <span *ngIf="role.name != 'user'">
             <div class="center">
             <button type="submit" (click)="goCompany(role.name)">{{role.name}}</button>
         </div>
-        </span>
+</span>

@@ -55,15 +55,21 @@ export class HomeComponent implements OnInit {
     let isRole: boolean;
     isRole = false;
     this.roles.forEach((element: any) => {
+      console.log(element, 'Element');
+
       if (
         element.name === 'receptionist' ||
         element.name === 'admin' ||
         element.name === 'company' ||
-        element.name === 'doctor'
+        element.name === 'doctor'||
+
+element.name === "patient" ||
+element.name === "user"
       ) {
         isRole = true;
       }
     });
+    console.log(this.roles, 'ROLE');
     return isRole;
   }
 

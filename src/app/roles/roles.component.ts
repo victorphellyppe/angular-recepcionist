@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ServiceAuthService } from '../services/service-auth.service';
 import { Router } from '@angular/router';
+import { ServiceAuthService } from '../services/service-auth.service';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class RolesComponent implements OnInit {
     this.authService.login(loginUser)
       .subscribe(
         response => {
-          this.roles = response.user.roles;     
+          this.roles = response.user.roles;
           console.log(this.roles);
 
         },
@@ -40,6 +40,8 @@ export class RolesComponent implements OnInit {
   }
 
   goCompany(role : any) : void {
+    console.log({role});
+
     sessionStorage.setItem("role", role);
 
     if(role == 'doctor') {
@@ -50,6 +52,10 @@ export class RolesComponent implements OnInit {
     }
     else if(role == 'admin') {
       this.route.navigateByUrl('/admin-company-list');
+    } else if(role == 'patient') {
+      // alert('teste');
+      this.route.navigateByUrl('/company-list');
+
     }
   }
 }
