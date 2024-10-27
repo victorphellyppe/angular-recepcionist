@@ -52,10 +52,14 @@ export class RolesComponent implements OnInit {
     }
     else if(role == 'admin') {
       this.route.navigateByUrl('/admin-company-list');
-    } else if(role == 'patient') {
-      // alert('teste');
+    } else if(role == 'patient' || role == 'company_patient') {
       this.route.navigateByUrl('/company-list');
-
+    } else if(role == 'company_owner') {
+      this.route.navigateByUrl('/admin-company-list');
+    } if(role == 'company_receptionist') {
+      this.route.navigateByUrl('/company-list');
+    } if(role == 'company_doctor') {
+      this.route.navigateByUrl('/doctor-panel');
     }
   }
 }

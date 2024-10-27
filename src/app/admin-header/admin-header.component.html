@@ -2,22 +2,22 @@
 
     <nav>
         <ul>
-            <div class="logo-empresa"><img src="{{logo}}" routerLink="/admin-panel" title="Painel do Administrador"></div>
+            <div class="logo-empresa"><img src="../../assets/logo.png" routerLink="/admin-panel" title="Painel do Administrador"></div>
 
-            
+
 
             <div class="container-button" *ngIf="gestaoDeFuncionarios; then thenBlock2 else elseBlock2"></div>
-            
+
             <ng-template #thenBlock2>
                 <li id="on"><a type="button" routerLink="/admin-employee-management"
                         (click)="buttonOn('gestaoDeFuncionarios')">Gestão de Funcionários</a></li>
             </ng-template>
-           
+
             <ng-template #elseBlock2>
                 <li><a type="button" routerLink="/admin-employee-management" (click)="buttonOn('gestaoDeFuncionarios')">Gestão de Funcionários</a></li>
             </ng-template>
 
-            
+
 
 
 
@@ -34,8 +34,8 @@
 
 
 
-            
-            
+
+
 
 
             <div class="container-button" *ngIf="cadastrarAgenda; then thenBlock4 else elseBlock4"></div>
@@ -59,12 +59,12 @@
 
 
 
-           
+
             <button (click)="logOut()"><i class="fa fa-sign-out" aria-hidden="true"></i>
             </button>
 
 
-            
+
         </ul>
     </nav>
 </body>
