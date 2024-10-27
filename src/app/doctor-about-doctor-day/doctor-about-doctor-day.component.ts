@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SchedulingsService } from '../services/schedulings.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-doctor-about-doctor-day',
@@ -38,24 +39,28 @@ export class DoctorAboutDoctorDayComponent implements OnInit {
   month!: number;
   year!: number;
   doctorId!: number;
-  constructor(private route: ActivatedRoute, private shedullingsSvc: SchedulingsService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private shedullingsSvc: SchedulingsService,
+    private toastSvc: ToastService
+  ) {}
 
   ngOnInit(): void {
     console.log('==================== Configurar o agendar');
     this.route.params.subscribe((params) => {
-      this.day = +params['day'];   // Converte o parâmetro 'day' para número
+      this.day = +params['day'];
       this.month = +params['month'];
       this.year = +params['year'];
       this.doctorId = +params['doctorId'];
     });
-    console.log(this.day, this.month, this.year, 'doctorId', this.doctorId);
+    // console.log(this.day, this.month, this.year, 'doctorId', this.doctorId);
 
   }
 
   schedule(name: string, time: string): void {
     this.selectedName = name;
     this.selectedTime = time;
-    console.log(this.selectedName)
+    // console.log(this.selectedName)
   }
 
 
@@ -75,7 +80,7 @@ export class DoctorAboutDoctorDayComponent implements OnInit {
       return;
     }
 
-    alert(`VICTOR Agendado: ${this.selectedName} para ${this.selectedTime} como ${type}`);
+    // alert(`VICTOR Agendado: ${this.selectedName} para ${this.selectedTime} como ${type}`);
 
     // Recupera o user_id e verifica se ele existe
     const user_id_str = sessionStorage.getItem('user_id');
@@ -110,6 +115,8 @@ export class DoctorAboutDoctorDayComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log('Agendamento realizado com sucesso:', response);
+          // this.toastSvc.showSuccess("Agendamento Confirmado!")
+          this.toastSvc.showSuccess("Agendamento Confirmado!");
         },
         error: (err) => {
           console.error('Erro ao agendar:', err);
