@@ -30,7 +30,7 @@ export class ReceptionistPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.listPatient();
-    console.log(this.listPatient());
+    // console.log(this.listPatient());
   }
 
   search(event:Event): void {
@@ -52,21 +52,22 @@ export class ReceptionistPanelComponent implements OnInit {
             this.listPatients = data;
           },
           error: (error: any) => {
-            console.log('Erro ao listar pacientes:', error);
+            // console.log('Erro ao listar pacientes:', error);
           },
           complete: () => {
-            console.log('Listagem de pacientes concluída.');
+            // console.log('Listagem de pacientes concluída.');
           }
         });
     } else {
-      console.log('Token ou Company ID está ausente.');
+      // console.log('Token ou Company ID está ausente.');
     }
   }
 
 
   selectPatient(patientId: any): void {
     sessionStorage.setItem("patientId", patientId);
-    this.route.navigateByUrl('/patient-schedule');
+    this.route.navigateByUrl('/about-doctor');
+    // this.route.navigateByUrl('/patient-schedule');
 
   }
 

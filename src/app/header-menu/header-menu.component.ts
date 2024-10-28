@@ -19,6 +19,9 @@ export class HeaderMenuComponent implements OnInit {
   constructor(private router: Router, private authService: ServiceAuthService) { }
 
   ngOnInit(): void {
+    this.role = sessionStorage.getItem('role');
+    // console.log(this.role);
+
     this.checkLightedButton();
     this. getLogoTemp();
     this.role = sessionStorage.getItem("role");

@@ -19,8 +19,8 @@ export class PatientService {
   ) { }
 
   listPatients(token: any, companyId: number): Observable<any> {
-    console.log(token, 'token');
-    console.log(companyId, 'companyId');
+    // console.log(token, 'token');
+    // console.log(companyId, 'companyId');
 
     var reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
